@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Productos disponibles:</h1>
+
+<div class="row">
+  <div class="col-md-4 mt-4">
+    <h3> Búsqueda de productos: </h3>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+  <div class="col-md-8 mt-4">
+    <h3> Resultado de Búsqueda: </h3>
+    <div class="list-group">
+      <% @products.each do |product| %>
+      <a href="" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1"><%= product.title %></h5>
+          <small><%= time_ago_in_words(product.created_at) %> ago</small>
+        </div>
+        <p class="mb-1"><%= product.content %></p>
+        <small><%= product.price %>CLP</small>
+      </a>
+      <% end %>
+    </div>
+  </div>
+</div>
