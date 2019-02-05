@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :products
+  resources :products do
+    member do
+      get 'buy'
+    end
+    collection do
+      get 'bought' 
+    end
+  end
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }

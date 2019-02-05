@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :buy]
+  before_action :authenticate_user!, except: [:index]
 
   # GET /products
   # GET /products.json
@@ -8,6 +9,18 @@ class ProductsController < ApplicationController
     @product = Product.new
   end
 
+  def buy
+    @user = User.find(current_user.id)
+    @order = Order.where(user_id: @user.id, product_id: @product.id)
+    if @order.one?
+      @order[0].update(sold: true)
+      redirect_to products_path
+    end
+  end
+
+  def bought
+    @orders = Order.all
+  end
   # GET /products/1
   # GET /products/1.json
   def show
@@ -26,9 +39,12 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
-    @product.user = current_user
     respond_to do |format|
       if @product.save
+          @users = User.all
+          @users.each do |user|
+            user.products << @product
+          end
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
       else
