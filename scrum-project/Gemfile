@@ -8,7 +8,7 @@ gem 'rails', '~> 5.2.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use devise for authentication purposes
-gem 'devise'
+gem 'devise', '>= 4.6.0'
 # Creates a graph to understand better your project
 gem 'ruby-graphviz'
 # Use Puma as the app server
